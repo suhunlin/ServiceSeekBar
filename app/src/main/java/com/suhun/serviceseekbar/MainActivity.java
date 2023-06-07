@@ -21,10 +21,30 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        seekBar = findViewById(R.id.seek);
         MyReceiver myReceiver = new MyReceiver();
         registerReceiver(myReceiver, new IntentFilter("happy"));
         counterShow = findViewById(R.id.showCounter);
+        seekBar = findViewById(R.id.seek);
+        seekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+            @Override
+            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+                if(fromUser){
+                    Intent intent = new Intent(MainActivity.this, MyService.class);
+                    intent.putExtra("newCounter", progress);
+                    startService(intent);
+                }
+            }
+
+            @Override
+            public void onStartTrackingTouch(SeekBar seekBar) {
+
+            }
+
+            @Override
+            public void onStopTrackingTouch(SeekBar seekBar) {
+
+            }
+        });
     }
 
     public void startServiceFun(View view){

@@ -61,6 +61,10 @@ public class MyService extends Service {
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
+        int newCounter = intent.getIntExtra("newCounter", -1);
+        if(newCounter>0){
+            counter = newCounter;
+        }
         return super.onStartCommand(intent, flags, startId);
     }
 
